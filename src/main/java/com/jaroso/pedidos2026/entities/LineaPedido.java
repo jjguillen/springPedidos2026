@@ -9,19 +9,21 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class Producto {
+public class LineaPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(nullable = false)
     private Long id;
 
     @Column(nullable = false)
-    private String nombre;
+    private Integer cantidad;
 
-    private String descripcion;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "producto_id")
+    private Producto producto;
 
-    private Double precio;
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pedido_id")
+    private Pedido pedido;
 
 }
