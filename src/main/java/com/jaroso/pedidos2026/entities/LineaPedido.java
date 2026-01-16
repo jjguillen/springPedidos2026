@@ -3,7 +3,7 @@ package com.jaroso.pedidos2026.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+@Entity(name = "lineas_pedidos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,7 +11,7 @@ import lombok.*;
 @ToString
 public class LineaPedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private Long id;
 
