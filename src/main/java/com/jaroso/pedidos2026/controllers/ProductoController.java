@@ -3,6 +3,7 @@ package com.jaroso.pedidos2026.controllers;
 import com.jaroso.pedidos2026.entities.Producto;
 import com.jaroso.pedidos2026.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class ProductoController {
 
     @PostMapping("/productos")
     public ResponseEntity<Producto> saveProducto(@RequestBody Producto producto){
-        return ResponseEntity.ok(productoRepository.save(producto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoRepository.save(producto));
     }
 
 
