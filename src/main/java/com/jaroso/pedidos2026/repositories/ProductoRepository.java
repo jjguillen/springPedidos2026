@@ -1,9 +1,9 @@
 package com.jaroso.pedidos2026.repositories;
 
-import com.jaroso.pedidos2026.entities.Cliente;
+import com.jaroso.pedidos2026.entities.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface ProductoRepository extends JpaRepository<Producto, Long> {
 }
