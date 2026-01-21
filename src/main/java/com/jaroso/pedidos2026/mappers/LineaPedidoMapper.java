@@ -5,9 +5,10 @@ import com.jaroso.pedidos2026.dtos.LineaPedidoDto;
 import com.jaroso.pedidos2026.entities.LineaPedido;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface LineaPedidoMapper {
     LineaPedidoDto toDto(LineaPedido lineaPedido);
     LineaPedido lineaPedidoCreateDtoEntity(LineaPedidoCreateDto dto);
-
 }

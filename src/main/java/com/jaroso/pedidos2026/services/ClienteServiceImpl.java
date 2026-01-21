@@ -7,6 +7,7 @@ import com.jaroso.pedidos2026.mappers.ClienteMapper;
 import com.jaroso.pedidos2026.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClienteDto> findAll() {
         return repo.findAll().stream().map(mapper::toDto).toList();
     }
@@ -37,6 +39,7 @@ public class ClienteServiceImpl implements ClienteService{
     }
 
     @Override
+    @Transactional
     public boolean delete(Long id) {
         Optional<Cliente> cliente = repo.findById(id);
         if (cliente.isPresent()) {
