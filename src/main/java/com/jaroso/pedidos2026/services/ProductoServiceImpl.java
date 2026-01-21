@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductoServiceImpl implements ProductoService{
+public class ProductoServiceImpl implements ProductoService {
 
     @Autowired
     private ProductoRepository repo;
@@ -25,6 +25,7 @@ public class ProductoServiceImpl implements ProductoService{
         Producto producto = mapper.productoCreateDtoToEntity(dto);
         return mapper.toDto(repo.save(producto));
     }
+
     @Transactional(readOnly = true)
     public List<ProductoDto> findAll() {
         return repo.findAll().stream().map(mapper::toDto).toList();
@@ -35,11 +36,13 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Transactional
-    public void delete(ProductoDto dto) {
-        if (!repo.existsById(dto.id())) return;
-        else {
-            Optional<Producto> producto = repo.findById(dto.id());
-            producto.ifPresent(value -> repo.delete(value));
+    public boolean delete(Long id) {
+        Optional<Producto> producto = repo.findById(id);
+        if (producto.isPresent()) {
+            repo.delete(producto.get());
+            return true;
+        } else {
+            return false;
         }
     }
 

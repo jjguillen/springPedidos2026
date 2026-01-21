@@ -31,9 +31,8 @@ public class ProductoController {
 
     @DeleteMapping("/productos/{id}")
     public ResponseEntity<ProductoDto> deleteProducto(@PathVariable Long id) {
-        Optional<ProductoDto> productoDto = productoservice.findById(id);
-        if (productoDto.isPresent()) {
-            productoservice.delete(productoDto.get());
+        boolean encontrado = productoservice.delete(id);
+        if (encontrado) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
