@@ -8,6 +8,7 @@ import com.jaroso.pedidos2026.mappers.PedidoMapper;
 import com.jaroso.pedidos2026.repositories.ClienteRepository;
 import com.jaroso.pedidos2026.repositories.PedidoRepository;
 import com.jaroso.pedidos2026.repositories.ProductoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,14 +36,16 @@ public class PedidoServiceImpl implements PedidoService {
     @Transactional
     public PedidoDto create(PedidoCreateDto dto) {
         //Obtener el cliente que está haciendo el pedido
-        Cliente cliente = clienteRepository.findById(dto.clienteId()).orElseThrow();
+        Cliente cliente = clienteRepository.findById(dto.clienteId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado"));
         //Creamos un pedido nuevo
         Pedido pedido = new Pedido();
         //Le asignamos el cliente
         pedido.setCliente(cliente);
         //Sacamos las líneas dto, y las tenemos que ir añadiendo al pedido
         for(LineaPedidoCreateDto lineaDto : dto.lineas()) {
-            Producto producto = productoRepository.findById(lineaDto.productoId()).orElseThrow();
+            Producto producto = productoRepository.findById(lineaDto.productoId())
+                    .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
             LineaPedido linea = new LineaPedido();
             linea.setCantidad(lineaDto.cantidad());
             linea.setProducto(producto);
@@ -65,7 +68,6 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    @Transactional
     public boolean delete(Long id) {
         Optional<Pedido> pedido = pedidoRepository.findById(id);
         if (pedido.isPresent()) {
@@ -77,8 +79,9 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PedidoDto> findAll() {
+
         return pedidoRepository.findAll().stream().map(mapper::toDto).toList();
     }
 }

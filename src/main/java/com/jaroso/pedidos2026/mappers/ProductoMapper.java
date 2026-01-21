@@ -5,10 +5,12 @@ import com.jaroso.pedidos2026.dtos.ProductoCreateDto;
 import com.jaroso.pedidos2026.dtos.ProductoDto;
 import com.jaroso.pedidos2026.entities.Producto;
 import org.mapstruct.Mapper;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface ProductoMapper {
     ProductoDto toDto(Producto producto);
     Producto productoCreateDtoToEntity(ProductoCreateDto dto);
+
     ProductoBasicoDto toBasicoDto(Producto producto);
 }

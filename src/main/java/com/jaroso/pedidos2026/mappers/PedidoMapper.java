@@ -9,9 +9,9 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {LineaPedidoMapper.class, ClienteMapper.class})
 public interface PedidoMapper {
     PedidoDto toDto(Pedido pedido);
     Pedido pedidoCreateDtoToEntity(PedidoCreateDto dto);
-    List<LineaPedidoDto> lineasToDto(List<LineaPedido> lineas);
+
 }
