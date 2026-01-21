@@ -1,7 +1,10 @@
 package com.jaroso.pedidos2026.controllers;
 
+import com.jaroso.pedidos2026.dtos.ClienteCreateDto;
+import com.jaroso.pedidos2026.dtos.ClienteDto;
 import com.jaroso.pedidos2026.entities.Cliente;
 import com.jaroso.pedidos2026.repositories.ClienteRepository;
+import com.jaroso.pedidos2026.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,32 +18,31 @@ import java.util.Optional;
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clienteRepository;
+    private ClienteService clienteService;
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> getAllClientes(){
-        return ResponseEntity.ok(clienteRepository.findAll());
+    public ResponseEntity<List<ClienteDto>> getAllClientes(){
+        return ResponseEntity.ok(clienteService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getCliente(@PathVariable Long id){
-        return clienteRepository.findById(id)
+    public ResponseEntity<ClienteDto> getCliente(@PathVariable Long id){
+        return clienteService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> saveCliente(@RequestBody Cliente cliente){
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteRepository.save(cliente));
+    public ResponseEntity<ClienteDto> saveCliente(@RequestBody ClienteCreateDto cliente){
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.create(cliente));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Cliente> deleteCliente(@PathVariable Long id){
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if (cliente.isPresent()){
-            clienteRepository.delete(cliente.get());
+    public ResponseEntity<Object> deleteCliente(@PathVariable Long id){
+        boolean encontrado = clienteService.delete(id);
+        if (encontrado) {
             return ResponseEntity.noContent().build();
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
