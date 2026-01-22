@@ -18,6 +18,12 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    // Asegura que devtools esté disponible en runtime cuando ejecutas desde el IDE/Gradle
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 repositories {
