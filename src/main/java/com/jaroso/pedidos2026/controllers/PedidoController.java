@@ -27,4 +27,21 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoService.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PedidoDto> getPedido(@PathVariable Long id){
+        return pedidoService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deletePedido(@PathVariable Long id){
+        boolean encontrado = pedidoService.delete(id);
+        if (encontrado) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

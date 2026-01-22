@@ -1,5 +1,6 @@
 package com.jaroso.pedidos2026.dtos;
 
-//Nos falta poner los pedidos
-public record ClienteDto(Long id, String nombre, String email) {
+import java.util.List;
+
+public record ClienteDto(Long id, String nombre, String email, List<PedidoResumenDto> pedidos) {
 }

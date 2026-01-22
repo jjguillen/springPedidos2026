@@ -5,7 +5,7 @@ import com.jaroso.pedidos2026.dtos.ClienteDto;
 import com.jaroso.pedidos2026.entities.Cliente;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {PedidoMapper.class})
 public interface ClienteMapper {
     ClienteDto toDto(Cliente cliente);
     Cliente clienteCreateDtoEntity(ClienteCreateDto dto);
