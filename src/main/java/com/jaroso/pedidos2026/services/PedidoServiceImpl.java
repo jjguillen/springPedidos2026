@@ -81,7 +81,6 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @Transactional(readOnly = true)
     public List<PedidoDto> findAll() {
-
         return pedidoRepository.findAll().stream().map(mapper::toDto).toList();
     }
 }

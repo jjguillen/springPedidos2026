@@ -18,7 +18,7 @@ public class LineaPedido {
     @Column(nullable = false)
     private Integer cantidad;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
